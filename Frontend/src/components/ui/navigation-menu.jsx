@@ -1,7 +1,7 @@
 import * as React from "react"
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu"
 import { cva } from "class-variance-authority"
-import { ChevronDown } from "lucide-react"
+import { ChevronDown, Menu, X } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
@@ -9,10 +9,11 @@ const NavigationMenu = React.forwardRef(({ className, children, ...props }, ref)
   <NavigationMenuPrimitive.Root
     ref={ref}
     className={cn(
-      "relative z-10 flex max-w-max flex-1 items-center justify-center",
+      "relative z-10 flex w-full items-center justify-between bg-background px-4 py-2",
       className
     )}
-    {...props}>
+    {...props}
+  >
     {children}
     <NavigationMenuViewport />
   </NavigationMenuPrimitive.Root>
@@ -23,28 +24,31 @@ const NavigationMenuList = React.forwardRef(({ className, ...props }, ref) => (
   <NavigationMenuPrimitive.List
     ref={ref}
     className={cn(
-      "group flex flex-1 list-none items-center justify-center space-x-1",
+      "hidden md:flex list-none items-center justify-center space-x-4",
       className
     )}
-    {...props} />
+    {...props}
+  />
 ))
 NavigationMenuList.displayName = NavigationMenuPrimitive.List.displayName
 
 const NavigationMenuItem = NavigationMenuPrimitive.Item
 
 const navigationMenuTriggerStyle = cva(
-  "group inline-flex h-9 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[state=open]:text-accent-foreground data-[state=open]:bg-accent/50 data-[state=open]:hover:bg-accent data-[state=open]:focus:bg-accent"
+  "inline-flex h-9 items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:outline-none data-[state=open]:bg-accent/50 data-[state=open]:text-accent-foreground"
 )
 
 const NavigationMenuTrigger = React.forwardRef(({ className, children, ...props }, ref) => (
   <NavigationMenuPrimitive.Trigger
     ref={ref}
-    className={cn(navigationMenuTriggerStyle(), "group", className)}
-    {...props}>
+    className={cn(navigationMenuTriggerStyle(), className)}
+    {...props}
+  >
     {children}{" "}
     <ChevronDown
-      className="relative top-[1px] ml-1 h-3 w-3 transition duration-300 group-data-[state=open]:rotate-180"
-      aria-hidden="true" />
+      className="ml-1 h-3 w-3 transition-transform duration-300 group-data-[state=open]:rotate-180"
+      aria-hidden="true"
+    />
   </NavigationMenuPrimitive.Trigger>
 ))
 NavigationMenuTrigger.displayName = NavigationMenuPrimitive.Trigger.displayName
@@ -53,10 +57,11 @@ const NavigationMenuContent = React.forwardRef(({ className, ...props }, ref) =>
   <NavigationMenuPrimitive.Content
     ref={ref}
     className={cn(
-      "left-0 top-0 w-full data-[motion^=from-]:animate-in data-[motion^=to-]:animate-out data-[motion^=from-]:fade-in data-[motion^=to-]:fade-out data-[motion=from-end]:slide-in-from-right-52 data-[motion=from-start]:slide-in-from-left-52 data-[motion=to-end]:slide-out-to-right-52 data-[motion=to-start]:slide-out-to-left-52 md:absolute md:w-auto ",
+      "absolute top-full left-0 mt-1 w-56 rounded-md border bg-popover shadow-md p-2 md:w-auto",
       className
     )}
-    {...props} />
+    {...props}
+  />
 ))
 NavigationMenuContent.displayName = NavigationMenuPrimitive.Content.displayName
 
@@ -65,40 +70,109 @@ const NavigationMenuLink = NavigationMenuPrimitive.Link
 const NavigationMenuViewport = React.forwardRef(({ className, ...props }, ref) => (
   <div className={cn("absolute left-0 top-full flex justify-center")}>
     <NavigationMenuPrimitive.Viewport
+      ref={ref}
       className={cn(
-        "origin-top-center relative mt-1.5 h-[var(--radix-navigation-menu-viewport-height)] w-full overflow-hidden rounded-md border bg-popover text-popover-foreground shadow data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-90 md:w-[var(--radix-navigation-menu-viewport-width)]",
+        "relative mt-1.5 h-[var(--radix-navigation-menu-viewport-height)] w-full overflow-hidden rounded-md border bg-popover text-popover-foreground shadow md:w-[var(--radix-navigation-menu-viewport-width)]",
         className
       )}
-      ref={ref}
-      {...props} />
+      {...props}
+    />
   </div>
 ))
-NavigationMenuViewport.displayName =
-  NavigationMenuPrimitive.Viewport.displayName
+NavigationMenuViewport.displayName = NavigationMenuPrimitive.Viewport.displayName
 
 const NavigationMenuIndicator = React.forwardRef(({ className, ...props }, ref) => (
   <NavigationMenuPrimitive.Indicator
     ref={ref}
     className={cn(
-      "top-full z-[1] flex h-1.5 items-end justify-center overflow-hidden data-[state=visible]:animate-in data-[state=hidden]:animate-out data-[state=hidden]:fade-out data-[state=visible]:fade-in",
+      "top-full z-[1] flex h-1.5 items-end justify-center overflow-hidden",
       className
     )}
-    {...props}>
-    <div
-      className="relative top-[60%] h-2 w-2 rotate-45 rounded-tl-sm bg-border shadow-md" />
+    {...props}
+  >
+    <div className="relative top-[60%] h-2 w-2 rotate-45 rounded-tl-sm bg-border shadow-md" />
   </NavigationMenuPrimitive.Indicator>
 ))
-NavigationMenuIndicator.displayName =
-  NavigationMenuPrimitive.Indicator.displayName
+NavigationMenuIndicator.displayName = NavigationMenuPrimitive.Indicator.displayName
+
+// ===========================
+// Responsive MainNavigation
+// ===========================
+export default function MainNavigation() {
+  const [mobileOpen, setMobileOpen] = React.useState(false)
+
+  return (
+    <NavigationMenu>
+      {/* Desktop Menu */}
+      <NavigationMenuList>
+        <NavigationMenuItem>
+          <NavigationMenuLink href="/" className="px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">
+            Home
+          </NavigationMenuLink>
+        </NavigationMenuItem>
+
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>Mountains</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <NavigationMenuLink href="/mountain1" className="block px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">Mountain 1</NavigationMenuLink>
+            <NavigationMenuLink href="/mountain2" className="block px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">Mountain 2</NavigationMenuLink>
+            <NavigationMenuLink href="/mountain3" className="block px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">Mountain 3</NavigationMenuLink>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+
+        <NavigationMenuItem>
+          <NavigationMenuLink href="/recommended" className="px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">Recommended</NavigationMenuLink>
+        </NavigationMenuItem>
+
+        <NavigationMenuItem>
+          <NavigationMenuLink href="/contact" className="px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">Contact</NavigationMenuLink>
+        </NavigationMenuItem>
+
+        <NavigationMenuItem>
+          <NavigationMenuLink href="/about" className="px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">About</NavigationMenuLink>
+        </NavigationMenuItem>
+      </NavigationMenuList>
+
+      {/* Mobile Hamburger */}
+      <button
+        className="md:hidden p-2 rounded-md hover:bg-accent"
+        onClick={() => setMobileOpen(!mobileOpen)}
+      >
+        {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+      </button>
+
+      {/* Mobile Slide-Over Menu */}
+      {mobileOpen && (
+        <div className="absolute top-full left-0 w-full bg-background flex flex-col p-4 space-y-2 shadow-md md:hidden">
+          <NavigationMenuLink href="/" className="px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">Home</NavigationMenuLink>
+
+          {/* Mountains Dropdown */}
+          <div className="flex flex-col">
+            <span className="px-3 py-2 font-medium flex items-center justify-between rounded-md hover:bg-accent hover:text-accent-foreground cursor-pointer"
+                  onClick={() => setMobileOpen(prev => !prev)}>Mountains <ChevronDown className="h-3 w-3 ml-1" /></span>
+            <div className="ml-4 flex flex-col space-y-1 mt-1">
+              <NavigationMenuLink href="/mountain1" className="px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">Mountain 1</NavigationMenuLink>
+              <NavigationMenuLink href="/mountain2" className="px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">Mountain 2</NavigationMenuLink>
+              <NavigationMenuLink href="/mountain3" className="px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">Mountain 3</NavigationMenuLink>
+            </div>
+          </div>
+
+          <NavigationMenuLink href="/recommended" className="px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">Recommended</NavigationMenuLink>
+          <NavigationMenuLink href="/contact" className="px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">Contact</NavigationMenuLink>
+          <NavigationMenuLink href="/about" className="px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">About</NavigationMenuLink>
+        </div>
+      )}
+    </NavigationMenu>
+  )
+}
 
 export {
-  navigationMenuTriggerStyle,
   NavigationMenu,
   NavigationMenuList,
   NavigationMenuItem,
-  NavigationMenuContent,
   NavigationMenuTrigger,
+  NavigationMenuContent,
   NavigationMenuLink,
-  NavigationMenuIndicator,
   NavigationMenuViewport,
+  NavigationMenuIndicator
 }
