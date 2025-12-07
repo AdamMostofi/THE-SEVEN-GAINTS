@@ -114,9 +114,9 @@ export default function MainNavigation() {
         <NavigationMenuItem>
           <NavigationMenuTrigger>Mountains</NavigationMenuTrigger>
           <NavigationMenuContent>
-            <NavigationMenuLink href="/mountain1" className="block px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">Mountain 1</NavigationMenuLink>
-            <NavigationMenuLink href="/mountain2" className="block px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">Mountain 2</NavigationMenuLink>
-            <NavigationMenuLink href="/mountain3" className="block px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">Mountain 3</NavigationMenuLink>
+            <NavigationMenuLink href="/mountain1" className="block px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">Everest</NavigationMenuLink>
+            <NavigationMenuLink href="/mountain2" className="block px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">K2</NavigationMenuLink>
+            <NavigationMenuLink href="/mountain3" className="block px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">Kangchenjunga</NavigationMenuLink>
           </NavigationMenuContent>
         </NavigationMenuItem>
 
