@@ -5,49 +5,49 @@ const mountains = [
     name: "Mount Everest",
     height: "8,849 m",
     country: "Nepal/China",
-    img: "/assets/everest.jpg",
+    img: "/public/everest.jpg",
     link: "/everest",
   },
   {
     name: "K2",
     height: "8,611 m",
     country: "Pakistan/China",
-    img: "/assets/k2.webp",
+    img: "/public/k2.webp",
     link: "/k2",
   },
   {
     name: "Kangchenjunga",
     height: "8,586 m",
     country: "Nepal/India",
-    img: "/assets/Kangchenjunga.webp",
+    img: "/public/Kangchenjunga.webp",
     link: "/kangchenjunga",
   },
   {
     name: "Lhotse",
     height: "8,516 m",
     country: "Nepal/China",
-    img: "/assets/Lhotse.jpeg",
+    img: "/public/Lhotse.jpeg",
     link: "/lhotse",
   },
   {
     name: "Makalu",
     height: "8,485 m",
     country: "Nepal/China",
-    img: "/assets/Makalu.jpeg",
+    img: "/public/Makalu.jpeg",
     link: "/makalu",
   },
   {
     name: "Cho Oyu",
     height: "8,188 m",
     country: "Nepal/China",
-    img: "/assets/Cho Oyu.jpg",
+    img: "/public/Cho Oyu.jpg",
     link: "/chooyu",
   },
   {
     name: "Dhaulagiri",
     height: "8,167 m",
     country: "Nepal",
-    img: "/assets/Dhaulagiri.jpeg",
+    img: "/public/Dhaulagiri.jpeg",
     link: "/dhaulagiri",
   },
 ];
@@ -59,7 +59,7 @@ export default function HomePage() {
       <section
         className="relative w-full h-[90vh] flex items-center justify-center text-center text-white"
         style={{
-          backgroundImage: "url('/assets/Hero.jpeg')",
+          backgroundImage: "url('/public/Hero.jpeg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
