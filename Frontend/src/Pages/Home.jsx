@@ -1,3 +1,5 @@
+// Frontend/src/Pages/Home.jsx
+
 import React from "react";
 
 const mountains = [
