@@ -114,13 +114,19 @@ export default function MainNavigation() {
         </NavigationMenuItem>
 
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Mountains</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <NavigationMenuLink href="/mountain1" className="block px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">Everest</NavigationMenuLink>
-            <NavigationMenuLink href="/mountain2" className="block px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">K2</NavigationMenuLink>
-            <NavigationMenuLink href="/mountain3" className="block px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">Kangchenjunga</NavigationMenuLink>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
+  <NavigationMenuTrigger>Mountains</NavigationMenuTrigger>
+  <NavigationMenuContent>
+    {/* These links need to be dynamically generated or based on your initial 7 IDs */}
+    <NavigationMenuLink href="/mountains/1" className="block px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">Everest</NavigationMenuLink>
+    <NavigationMenuLink href="/mountains/2" className="block px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">K2</NavigationMenuLink>
+    <NavigationMenuLink href="/mountains/3" className="block px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">Kangchenjunga</NavigationMenuLink>
+    <NavigationMenuLink href="/mountains/4" className="block px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">Lhotse</NavigationMenuLink>
+    <NavigationMenuLink href="/mountains/5" className="block px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">Makalu</NavigationMenuLink>
+    <NavigationMenuLink href="/mountains/6" className="block px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">Cho Oyu</NavigationMenuLink>
+    <NavigationMenuLink href="/mountains/7" className="block px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">Dhaulagiri</NavigationMenuLink>
+    {/* ... add others (4-7) */}
+  </NavigationMenuContent>
+</NavigationMenuItem>
 
         <NavigationMenuItem>
           <NavigationMenuLink href="/recommended" className="px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">Recommended</NavigationMenuLink>
