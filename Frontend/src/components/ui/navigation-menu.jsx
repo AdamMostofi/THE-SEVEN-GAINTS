@@ -3,30 +3,39 @@
 import * as React from "react"
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu"
 import { cva } from "class-variance-authority"
-import { ChevronDown, Menu, X } from "lucide-react"
-
+import { ChevronDown, Menu, X, Mountain } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const NavigationMenu = React.forwardRef(({ className, children, ...props }, ref) => (
   <NavigationMenuPrimitive.Root
     ref={ref}
-    // Updated classes: sticky, backdrop-blur, transparent to white transition
     className={cn(
-      "sticky top-0 z-50 flex w-full items-center justify-between px-8 py-4 bg-white/70 backdrop-blur-md border-b border-white/20 shadow-sm",
+      "sticky top-0 z-[100] flex w-full items-center justify-between px-8 py-4 bg-white/80 backdrop-blur-md border-b border-stone-200 shadow-sm",
       className
     )}
     {...props}
   >
-    {/* Logo / Title */}
-    <div className="flex items-center gap-2">
-      <div className="w-8 h-8 bg-green-900 rounded-full flex items-center justify-center">
-        <div className="w-4 h-4 border-t-2 border-l-2 border-white rotate-45 mt-1"></div>
+    {/* --- LOGO SECTION START --- */}
+    <a href="/" className="flex items-center gap-3 group no-underline">
+      <div className="bg-green-900 p-2 rounded-lg group-hover:bg-green-800 transition-colors shadow-lg shadow-green-900/20">
+        <Mountain className="w-6 h-6 text-white" />
       </div>
-      <span className="font-bold text-xl tracking-tighter text-green-900">THE SEVEN GIANTS</span>
-    </div>
+      <div className="flex flex-col">
+        <span className="font-black text-xl leading-none tracking-tighter text-green-900">
+          THE SEVEN
+        </span>
+        <span className="font-bold text-xs tracking-[0.3em] text-stone-500 leading-tight">
+          GIANTS
+        </span>
+      </div>
+    </a>
+    {/* --- LOGO SECTION END --- */}
 
     {children}
-    <NavigationMenuViewport />
+    
+    <div className="perspective-[2000px] absolute left-0 top-full flex w-full justify-center">
+      <NavigationMenuViewport />
+    </div>
   </NavigationMenuPrimitive.Root>
 ))
 NavigationMenu.displayName = NavigationMenuPrimitive.Root.displayName
@@ -68,7 +77,7 @@ const NavigationMenuContent = React.forwardRef(({ className, ...props }, ref) =>
   <NavigationMenuPrimitive.Content
     ref={ref}
     className={cn(
-      "absolute top-full left-0 mt-1 w-56 rounded-md border bg-popover shadow-md p-2 md:w-auto",
+      "left-0 top-0 w-full data-[motion^=from-]:animate-in data-[motion^=to-]:animate-out data-[motion^=from-]:fade-in data-[motion^=to-]:fade-out data-[motion^=from-]:zoom-in-95 data-[motion^=to-]:zoom-out-95 md:absolute md:w-auto",
       className
     )}
     {...props}
@@ -122,18 +131,37 @@ export default function MainNavigation() {
           </NavigationMenuLink>
         </NavigationMenuItem>
 
-        <NavigationMenuItem>
-  <NavigationMenuTrigger>Mountains</NavigationMenuTrigger>
+ 
+  <NavigationMenuItem>
+  <NavigationMenuTrigger className="text-stone-700 hover:text-green-800 transition-colors font-semibold">
+    Mountains
+  </NavigationMenuTrigger>
   <NavigationMenuContent>
-    {/* These links need to be dynamically generated or based on your initial 7 IDs */}
-    <NavigationMenuLink href="/mountains/1" className="block px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">Everest</NavigationMenuLink>
-    <NavigationMenuLink href="/mountains/2" className="block px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">K2</NavigationMenuLink>
-    <NavigationMenuLink href="/mountains/3" className="block px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">Kangchenjunga</NavigationMenuLink>
-    <NavigationMenuLink href="/mountains/4" className="block px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">Lhotse</NavigationMenuLink>
-    <NavigationMenuLink href="/mountains/5" className="block px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">Makalu</NavigationMenuLink>
-    <NavigationMenuLink href="/mountains/6" className="block px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">Cho Oyu</NavigationMenuLink>
-    <NavigationMenuLink href="/mountains/7" className="block px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">Dhaulagiri</NavigationMenuLink>
-    {/* ... add others (4-7) */}
+    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] bg-white rounded-xl shadow-2xl border border-stone-100">
+      <li className="col-span-2 mb-2">
+        <p className="text-xs font-bold uppercase tracking-widest text-stone-400 px-2">Select a Peak</p>
+      </li>
+      {[
+        { id: 1, name: "Mount Everest", desc: "The Roof of the World" },
+        { id: 2, name: "K2", desc: "The Savage Mountain" },
+        { id: 3, name: "Kangchenjunga", desc: "The Five Treasures of Snow" },
+        { id: 4, name: "Lhotse", desc: "The South Peak" },
+        { id: 5, name: "Makalu", desc: "The Great Black" },
+        { id: 6, name: "Cho Oyu", desc: "The Turquoise Goddess" },
+        { id: 7, name: "Dhaulagiri", desc: "The White Mountain" },
+      ].map((mtn) => (
+        <NavigationMenuLink
+          key={mtn.id}
+          href={`/mountains/${mtn.id}`}
+          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-stone-50 hover:text-green-900"
+        >
+          <div className="text-sm font-bold leading-none">{mtn.name}</div>
+          <p className="line-clamp-2 text-xs leading-snug text-stone-500">
+            {mtn.desc}
+          </p>
+        </NavigationMenuLink>
+      ))}
+    </ul>
   </NavigationMenuContent>
 </NavigationMenuItem>
 
