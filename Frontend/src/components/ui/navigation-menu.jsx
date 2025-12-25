@@ -10,12 +10,21 @@ import { cn } from "@/lib/utils"
 const NavigationMenu = React.forwardRef(({ className, children, ...props }, ref) => (
   <NavigationMenuPrimitive.Root
     ref={ref}
+    // Updated classes: sticky, backdrop-blur, transparent to white transition
     className={cn(
-      "relative z-10 flex w-full items-center justify-between bg-background px-4 py-2",
+      "sticky top-0 z-50 flex w-full items-center justify-between px-8 py-4 bg-white/70 backdrop-blur-md border-b border-white/20 shadow-sm",
       className
     )}
     {...props}
   >
+    {/* Logo / Title */}
+    <div className="flex items-center gap-2">
+      <div className="w-8 h-8 bg-green-900 rounded-full flex items-center justify-center">
+        <div className="w-4 h-4 border-t-2 border-l-2 border-white rotate-45 mt-1"></div>
+      </div>
+      <span className="font-bold text-xl tracking-tighter text-green-900">THE SEVEN GIANTS</span>
+    </div>
+
     {children}
     <NavigationMenuViewport />
   </NavigationMenuPrimitive.Root>
