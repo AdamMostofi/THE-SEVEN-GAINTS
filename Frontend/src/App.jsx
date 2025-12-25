@@ -1,9 +1,12 @@
-// Frontend/src/App.jsx
-// ... imports
-import MountainPage from './Pages/MountainPage.jsx' // Need to create this
-import Recommended from './Pages/Recommended.jsx' // Need to create this
-import Contact from './Pages/Contact.jsx' // Need to create this
-import About from './Pages/About.jsx' // Need to create this
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import MountainPage from './Pages/MountainPage.jsx' 
+import Recommended from './Pages/Recommended.jsx' 
+import Contact from './Pages/Contact.jsx' 
+import About from './Pages/About.jsx' 
+import Home from './Pages/Home.jsx'
+import Navbar from './components/ui/navigation-menu.jsx'
+
+
 
 function App() {
   return (
