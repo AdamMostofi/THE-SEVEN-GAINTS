@@ -114,7 +114,28 @@ app.get('/api/products', async (req, res) => {
         res.status(500).json({ message: "Failed to retrieve product list." });
     }
 });
+// --- CORRECT CONTACT ROUTE ---
+app.post('/api/contact', async (req, res) => {
+    try {
+        const { name, email, message } = req.body;
 
+        // 1. Log arrival in terminal
+        console.log("📩 Submission received for:", name);
+
+        // 2. The SQL Query (Matches your id, name, email, message, created_at structure)
+        // Note: 'id' and 'created_at' are handled automatically by the DB
+        const sql = "INSERT INTO messages (name, email, message) VALUES (?, ?, ?)";
+        
+        await pool.query(sql, [name, email, message]);
+
+        console.log("✅ Saved to database successfully.");
+        res.status(200).json({ message: "Expedition inquiry saved successfully!" });
+
+    } catch (error) {
+        console.error("❌ DATABASE ERROR:", error.message);
+        res.status(500).json({ error: "Failed to save to database." });
+    }
+});
 // Start Server
 app.listen(PORT, () => {
     console.log(`🚀 Server running on port http://localhost:${PORT}`);

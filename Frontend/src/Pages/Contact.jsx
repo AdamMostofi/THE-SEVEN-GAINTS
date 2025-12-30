@@ -1,13 +1,28 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 function Contact() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
 
-  const handleSubmit = (e) => {
+ const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Submitted:", formData);
-    alert("Message sent! (Check the console to see the data)");
-  };
+
+    try {
+        // We send the formData object directly to the backend
+        const response = await axios.post("http://localhost:5000/api/contact", formData);
+        
+        // Success!
+        alert(response.data.message);
+        
+        // Reset form UI and State
+        setFormData({ name: "", email: "", message: "" });
+        e.target.reset();
+
+    } catch (error) {
+        console.error("Submission Error:", error);
+        alert("The server encountered an error. Check the backend terminal for details.");
+    }
+};
 
   return (
     <div className="max-w-4xl mx-auto py-20 px-6">
