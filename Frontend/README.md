@@ -1,16 +1,25 @@
-# React + Vite
+# 🏔️ THE SEVEN GIANTS - Expedition Portal
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A full-stack web application built for **CSCI426 Phase 2**. This platform allows mountain enthusiasts to explore peak data and communicate securely with the expedition team.
 
-Currently, two official plugins are available:
+## 🌟 Key Features
+- **User Authentication:** Complete Signup and Login flow.
+- **Relational Database:** Messages are linked to specific User IDs (One-to-Many relationship).
+- **Secure Admin Panel:** A restricted dashboard (`/admin`) for managing user communications.
+- **Dynamic Frontend:** Built with React and Tailwind CSS.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🛠️ Tech Stack
+- **Frontend:** React.js, Tailwind CSS, Lucide Icons, Axios.
+- **Backend:** Node.js, Express.js.
+- **Database:** MySQL (Relational).
 
-## React Compiler
+## ⚙️ Setup Instructions
+1. **Clone the repository.**
+2. **Install Dependencies:** Run `npm install` in the root directory.
+3. **Database:** Import the provided SQL schema into your MySQL server.
+4. **Run:** Start the server with `node server.js` and the frontend with `npm run dev`.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 📜 Database Relationship
+The project uses two related entities:
+- **Users Table:** Stores credentials.
+- **User_Messages Table:** Stores messages linked to Users via `user_id` (Foreign Key).
