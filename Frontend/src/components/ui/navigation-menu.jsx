@@ -119,7 +119,22 @@ NavigationMenuIndicator.displayName = NavigationMenuPrimitive.Indicator.displayN
 // Responsive MainNavigation
 // ===========================
 export default function MainNavigation() {
-  const [mobileOpen, setMobileOpen] = React.useState(false)
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [user, setUser] = React.useState(null);
+
+  // Check if user is logged in on mount
+  React.useEffect(() => {
+    const savedUser = localStorage.getItem("user");
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    setUser(null);
+    window.location.href = "/"; // Redirect to home
+  };
 
   return (
     <NavigationMenu>
@@ -131,39 +146,36 @@ export default function MainNavigation() {
           </NavigationMenuLink>
         </NavigationMenuItem>
 
- 
-  <NavigationMenuItem>
-  <NavigationMenuTrigger className="text-stone-700 hover:text-green-800 transition-colors font-semibold">
-    Mountains
-  </NavigationMenuTrigger>
-  <NavigationMenuContent>
-    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] bg-white rounded-xl shadow-2xl border border-stone-100">
-      <li className="col-span-2 mb-2">
-        <p className="text-xs font-bold uppercase tracking-widest text-stone-400 px-2">Select a Peak</p>
-      </li>
-      {[
-        { id: 1, name: "Mount Everest", desc: "The Roof of the World" },
-        { id: 2, name: "K2", desc: "The Savage Mountain" },
-        { id: 3, name: "Kangchenjunga", desc: "The Five Treasures of Snow" },
-        { id: 4, name: "Lhotse", desc: "The South Peak" },
-        { id: 5, name: "Makalu", desc: "The Great Black" },
-        { id: 6, name: "Cho Oyu", desc: "The Turquoise Goddess" },
-        { id: 7, name: "Dhaulagiri", desc: "The White Mountain" },
-      ].map((mtn) => (
-        <NavigationMenuLink
-          key={mtn.id}
-          href={`/mountains/${mtn.id}`}
-          className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-stone-50 hover:text-green-900"
-        >
-          <div className="text-sm font-bold leading-none">{mtn.name}</div>
-          <p className="line-clamp-2 text-xs leading-snug text-stone-500">
-            {mtn.desc}
-          </p>
-        </NavigationMenuLink>
-      ))}
-    </ul>
-  </NavigationMenuContent>
-</NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuTrigger className="text-stone-700 hover:text-green-800 transition-colors font-semibold">
+            Mountains
+          </NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] bg-white rounded-xl shadow-2xl border border-stone-100">
+              <li className="col-span-2 mb-2">
+                <p className="text-xs font-bold uppercase tracking-widest text-stone-400 px-2">Select a Peak</p>
+              </li>
+              {[
+                { id: 1, name: "Mount Everest", desc: "The Roof of the World" },
+                { id: 2, name: "K2", desc: "The Savage Mountain" },
+                { id: 3, name: "Kangchenjunga", desc: "The Five Treasures of Snow" },
+                { id: 4, name: "Lhotse", desc: "The South Peak" },
+                { id: 5, name: "Makalu", desc: "The Great Black" },
+                { id: 6, name: "Cho Oyu", desc: "The Turquoise Goddess" },
+                { id: 7, name: "Dhaulagiri", desc: "The White Mountain" },
+              ].map((mtn) => (
+                <NavigationMenuLink
+                  key={mtn.id}
+                  href={`/mountains/${mtn.id}`}
+                  className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-stone-50 hover:text-green-900"
+                >
+                  <div className="text-sm font-bold leading-none">{mtn.name}</div>
+                  <p className="line-clamp-2 text-xs leading-snug text-stone-500">{mtn.desc}</p>
+                </NavigationMenuLink>
+              ))}
+            </ul>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
 
         <NavigationMenuItem>
           <NavigationMenuLink href="/recommended" className="px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">Recommended</NavigationMenuLink>
@@ -176,41 +188,59 @@ export default function MainNavigation() {
         <NavigationMenuItem>
           <NavigationMenuLink href="/about" className="px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">About</NavigationMenuLink>
         </NavigationMenuItem>
+
+        {/* --- AUTH SECTION START --- */}
+        <div className="ml-4 flex items-center gap-2 border-l pl-4 border-stone-200">
+          {user ? (
+            <>
+              <span className="text-sm font-medium text-stone-500 italic mr-2">
+                Hi, {user.username}
+              </span>
+              <button 
+                onClick={handleLogout}
+                className="bg-stone-900 text-white px-4 py-2 rounded-full text-sm font-bold hover:bg-red-800 transition-colors shadow-lg shadow-stone-900/20"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <NavigationMenuLink href="/login" className="text-sm font-bold text-stone-600 hover:text-green-900 px-3">
+                Login
+              </NavigationMenuLink>
+              <NavigationMenuLink href="/signup" className="bg-green-900 text-white px-5 py-2 rounded-full text-sm font-bold hover:bg-green-800 transition-colors shadow-lg shadow-green-900/20">
+                Sign Up
+              </NavigationMenuLink>
+            </>
+          )}
+        </div>
+        {/* --- AUTH SECTION END --- */}
       </NavigationMenuList>
 
       {/* Mobile Hamburger */}
-      <button
-        className="md:hidden p-2 rounded-md hover:bg-accent"
-        onClick={() => setMobileOpen(!mobileOpen)}
-      >
+      <button className="md:hidden p-2 rounded-md hover:bg-accent" onClick={() => setMobileOpen(!mobileOpen)}>
         {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
       </button>
 
       {/* Mobile Slide-Over Menu */}
       {mobileOpen && (
         <div className="absolute top-full left-0 w-full bg-background flex flex-col p-4 space-y-2 shadow-md md:hidden">
-          <NavigationMenuLink href="/" className="px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">Home</NavigationMenuLink>
-
-          {/* Mountains Dropdown */}
-          <div className="flex flex-col">
-            <span className="px-3 py-2 font-medium flex items-center justify-between rounded-md hover:bg-accent hover:text-accent-foreground cursor-pointer"
-                  onClick={() => setMobileOpen(prev => !prev)}>Mountains <ChevronDown className="h-3 w-3 ml-1" /></span>
-            <div className="ml-4 flex flex-col space-y-1 mt-1">
-              <NavigationMenuLink href="/mountain1" className="px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">Mountain 1</NavigationMenuLink>
-              <NavigationMenuLink href="/mountain2" className="px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">Mountain 2</NavigationMenuLink>
-              <NavigationMenuLink href="/mountain3" className="px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">Mountain 3</NavigationMenuLink>
-            </div>
-          </div>
-
-          <NavigationMenuLink href="/recommended" className="px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">Recommended</NavigationMenuLink>
-          <NavigationMenuLink href="/contact" className="px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">Contact</NavigationMenuLink>
-          <NavigationMenuLink href="/about" className="px-3 py-2 rounded-md hover:bg-accent hover:text-accent-foreground">About</NavigationMenuLink>
+          <NavigationMenuLink href="/" className="px-3 py-2 rounded-md hover:bg-accent">Home</NavigationMenuLink>
+          <NavigationMenuLink href="/recommended" className="px-3 py-2 rounded-md hover:bg-accent">Recommended</NavigationMenuLink>
+          
+          {user ? (
+            <button onClick={handleLogout} className="text-left px-3 py-2 rounded-md text-red-600 font-bold hover:bg-red-50">Logout ({user.username})</button>
+          ) : (
+            <>
+              <NavigationMenuLink href="/login" className="px-3 py-2 rounded-md hover:bg-accent">Login</NavigationMenuLink>
+              <NavigationMenuLink href="/signup" className="px-3 py-2 rounded-md bg-green-900 text-white mt-2 text-center">Sign Up</NavigationMenuLink>
+            </>
+          )}
         </div>
       )}
     </NavigationMenu>
-  )
+  );
 }
-
 export {
   NavigationMenu,
   NavigationMenuList,

@@ -114,26 +114,51 @@ app.get('/api/products', async (req, res) => {
         res.status(500).json({ message: "Failed to retrieve product list." });
     }
 });
-// --- CORRECT CONTACT ROUTE ---
-app.post('/api/contact', async (req, res) => {
+// 1. SIGNUP: Create a new user (CRUD: Create)
+app.post('/api/signup', async (req, res) => {
+    const { username, email, password } = req.body;
     try {
-        const { name, email, message } = req.body;
-
-        // 1. Log arrival in terminal
-        console.log("📩 Submission received for:", name);
-
-        // 2. The SQL Query (Matches your id, name, email, message, created_at structure)
-        // Note: 'id' and 'created_at' are handled automatically by the DB
-        const sql = "INSERT INTO messages (name, email, message) VALUES (?, ?, ?)";
-        
-        await pool.query(sql, [name, email, message]);
-
-        console.log("✅ Saved to database successfully.");
-        res.status(200).json({ message: "Expedition inquiry saved successfully!" });
-
+        await pool.query(
+            "INSERT INTO users (username, email, password) VALUES (?, ?, ?)",
+            [username, email, password]
+        );
+        res.status(201).json({ message: "Account created successfully!" });
     } catch (error) {
-        console.error("❌ DATABASE ERROR:", error.message);
-        res.status(500).json({ error: "Failed to save to database." });
+        console.error(error);
+        res.status(500).json({ error: "Email already exists." });
+    }
+});
+
+// 2. LOGIN: Verify user (CRUD: Read)
+app.post('/api/login', async (req, res) => {
+    const { email, password } = req.body;
+    try {
+        const [rows] = await pool.query(
+            "SELECT id, username, email FROM users WHERE email = ? AND password = ?", 
+            [email, password]
+        );
+        if (rows.length > 0) {
+            res.status(200).json({ message: "Welcome back!", user: rows[0] });
+        } else {
+            res.status(401).json({ error: "Invalid email or password." });
+        }
+    } catch (error) {
+        res.status(500).json({ error: "Server error." });
+    }
+});
+
+// 3. CONTACT: Save message linked to user (Related Entities)
+app.post('/api/contact', async (req, res) => {
+    const { userId, message } = req.body; 
+    try {
+        await pool.query(
+            "INSERT INTO user_messages (user_id, message) VALUES (?, ?)",
+            [userId, message]
+        );
+        res.status(200).json({ message: "Your message has been saved to your account!" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Could not save message." });
     }
 });
 // Start Server
