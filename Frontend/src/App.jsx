@@ -6,6 +6,7 @@ import About from './Pages/About.jsx'
 import Home from './Pages/Home.jsx'
 import Signup from './Pages/Signup';
 import Login from './Pages/Login';
+import Admin from './Pages/Admin';
 import Navbar from './components/ui/navigation-menu.jsx'
 import Footer from './components/footer.jsx'
 
@@ -22,6 +23,7 @@ function App() {
           <Route path="/about" element={<About />} />
           {/* Dynamic route using the Mountain ID */}
           <Route path="/mountains/:mountainId" element={<MountainPage />} />
+          <Route path="/admin" element={<Admin />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
         </Routes>

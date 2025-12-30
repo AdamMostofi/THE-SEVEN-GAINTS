@@ -49,7 +49,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* --- VERTICAL TIMELINE --- */}
+      {/* Vertical timeline */}
       <section id="timeline" className="relative py-24 bg-stone-50">
         <div className="absolute left-1/2 top-0 h-full w-[2px] bg-stone-200 -translate-x-1/2 hidden md:block"></div>
 

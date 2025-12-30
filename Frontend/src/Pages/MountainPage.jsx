@@ -69,19 +69,19 @@ export default function MountainPage() {
       {/* --- CONTENT SECTION --- */}
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-12 pt-12 px-6 relative z-10">
         
-        {/* Main Column: Description */}
+        {/* Main : Description */}
         <div className="lg:col-span-2 space-y-8">
           <div className="bg-white p-10 rounded-3xl shadow-xl shadow-stone-200/50 border border-stone-100">
             <h2 className="text-sm font-black uppercase tracking-[0.3em] text-green-800 mb-6 flex items-center gap-2">
               <Info className="w-5 h-5" /> Expedition Overview
             </h2>
             
-            {/* Summary Highlight */}
+            {/* Summary  */}
             <p className="text-2xl font-bold text-stone-800 leading-snug mb-8 border-l-4 border-green-700 pl-6 italic">
                "{mountain.summary}"
             </p>
 
-            {/* Detailed Description */}
+            {/* Description */}
             <div className="prose prose-stone lg:prose-xl max-w-none">
                <p className="text-lg leading-relaxed text-stone-600 whitespace-pre-line first-letter:text-6xl first-letter:font-black first-letter:text-green-900 first-letter:mr-3 first-letter:float-left">
                 {mountain.description}
@@ -90,7 +90,7 @@ export default function MountainPage() {
           </div>
         </div>
 
-        {/* Sidebar Column: Stats Card */}
+        {/* Sidebar : Stats Card */}
         <div className="space-y-6">
           <div className="bg-stone-900 text-white p-8 rounded-3xl shadow-2xl relative overflow-hidden">
             <Mountain className="absolute -right-10 -bottom-10 w-48 h-48 text-white/5 rotate-12" />
