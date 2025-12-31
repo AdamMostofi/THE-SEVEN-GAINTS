@@ -9,7 +9,7 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post('http://localhost:5000/api/login', formData);
+            const res = await axios.post('https://the-seven-gaints.onrender.com/api/login', formData);
             // Store user data so we can use their ID for messages
             localStorage.setItem('user', JSON.stringify(res.data.user));
             alert("Login Successful!");

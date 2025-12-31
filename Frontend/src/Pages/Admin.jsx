@@ -34,7 +34,7 @@ const Admin = () => {
 
   const fetchMessages = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/admin/messages");
+      const res = await axios.get("https://the-seven-gaints.onrender.com/api/admin/messages");
       setMessages(res.data);
     } catch (err) {
       console.error("Error fetching messages:", err);

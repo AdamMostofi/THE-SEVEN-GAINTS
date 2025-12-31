@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Mountain, ArrowDown, MapPin, Ruler } from "lucide-react";
 
-const API_BASE_URL = "http://localhost:5000"; 
+const API_BASE_URL = "https://the-seven-gaints.onrender.com"; 
 
 export default function HomePage() {
   const [mountains, setMountains] = useState([]);

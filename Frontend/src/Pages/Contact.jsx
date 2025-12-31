@@ -25,7 +25,7 @@ function Contact() {
 
     try {
       // We send the message AND the userId to create the database relationship
-      const response = await axios.post("http://localhost:5000/api/contact", {
+      const response = await axios.post("https://the-seven-gaints.onrender.com/api/contact", {
         userId: user.id,
         message: message
       });

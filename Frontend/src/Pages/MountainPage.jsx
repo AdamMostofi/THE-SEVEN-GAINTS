@@ -3,7 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import { Mountain, MapPin, Ruler, Info, ChevronLeft, Globe } from "lucide-react";
 
-const API_BASE_URL = "http://localhost:5000";
+const API_BASE_URL = "https://the-seven-gaints.onrender.com";
 
 export default function MountainPage() {
   const { mountainId } = useParams(); 
