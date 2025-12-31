@@ -282,46 +282,60 @@ export default function MainNavigation() {
       </button>
 
       {/* Mobile Slide-Over Menu */}
-      {mobileOpen && (
-        <div className="absolute top-full left-0 w-full bg-background flex flex-col p-4 space-y-2 shadow-md md:hidden">
-          <NavigationMenuLink
-            href="/"
-            className="px-3 py-2 rounded-md hover:bg-accent"
-          >
-            Home
-          </NavigationMenuLink>
-          <NavigationMenuLink
-            href="/recommended"
-            className="px-3 py-2 rounded-md hover:bg-accent"
-          >
-            Recommended
-          </NavigationMenuLink>
+      {/* Mobile Slide-Over Menu */}
+{mobileOpen && (
+  <div className="absolute top-full left-0 w-full bg-white flex flex-col p-4 space-y-2 shadow-xl border-b border-stone-100 md:hidden z-[110]">
+    <NavigationMenuLink href="/" className="px-3 py-2 rounded-md hover:bg-stone-50 font-medium">
+      Home
+    </NavigationMenuLink>
+    
+    {/* Added missing links below */}
+    <NavigationMenuLink href="/mountains" className="px-3 py-2 rounded-md hover:bg-stone-50 font-medium">
+      Mountains
+    </NavigationMenuLink>
+    
+    <NavigationMenuLink href="/recommended" className="px-3 py-2 rounded-md hover:bg-stone-50 font-medium">
+      Recommended
+    </NavigationMenuLink>
+    
+    <NavigationMenuLink href="/contact" className="px-3 py-2 rounded-md hover:bg-stone-50 font-medium">
+      Contact
+    </NavigationMenuLink>
+    
+    <NavigationMenuLink href="/about" className="px-3 py-2 rounded-md hover:bg-stone-50 font-medium">
+      About
+    </NavigationMenuLink>
 
-          {user ? (
-            <button
-              onClick={handleLogout}
-              className="text-left px-3 py-2 rounded-md text-red-600 font-bold hover:bg-red-50"
-            >
-              Logout ({user.username})
-            </button>
-          ) : (
-            <>
-              <NavigationMenuLink
-                href="/login"
-                className="px-3 py-2 rounded-md hover:bg-accent"
-              >
-                Login
-              </NavigationMenuLink>
-              <NavigationMenuLink
-                href="/signup"
-                className="px-3 py-2 rounded-md bg-green-900 text-white mt-2 text-center"
-              >
-                Sign Up
-              </NavigationMenuLink>
-            </>
-          )}
-        </div>
-      )}
+    {user ? (
+      <>
+        {/* Added Admin Link for Mobile */}
+        {user.email === "adammostofi@gmail.com" && (
+          <NavigationMenuLink href="/admin" className="px-3 py-2 rounded-md bg-green-50 text-green-700 font-bold">
+            Admin Panel
+          </NavigationMenuLink>
+        )}
+        <button
+          onClick={handleLogout}
+          className="text-left px-3 py-2 rounded-md text-red-600 font-bold hover:bg-red-50"
+        >
+          Logout ({user.username})
+        </button>
+      </>
+    ) : (
+      <>
+        <NavigationMenuLink href="/login" className="px-3 py-2 rounded-md hover:bg-stone-50 font-medium">
+          Login
+        </NavigationMenuLink>
+        <NavigationMenuLink
+          href="/signup"
+          className="px-3 py-2 rounded-md bg-green-900 text-white mt-2 text-center font-bold"
+        >
+          Sign Up
+        </NavigationMenuLink>
+      </>
+    )}
+  </div>
+)}
     </NavigationMenu>
   );
 }
