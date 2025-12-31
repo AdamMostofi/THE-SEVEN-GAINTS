@@ -2,6 +2,9 @@
 
 A full-stack web application built for **CSCI426 Phase 2**. This platform allows mountain enthusiasts to explore peak data and communicate securely with the expedition team.
 
+# 🏔️ The Seven Giants
+**Live Demo:** https://the-seven-gaints-1.onrender.com/ 
+
 ## 🌟 Key Features
 - **User Authentication:** Complete Signup and Login flow.
 - **Relational Database:** Messages are linked to specific User IDs (One-to-Many relationship).
