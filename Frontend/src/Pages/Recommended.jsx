@@ -6,7 +6,7 @@ export default function Recommended() {
 
   useEffect(() => {
     // 🌍 LIVE Render backend URL
-    axios.get("https://the-seven-giants.onrender.com/api/products")
+    axios.get("https://the-seven-gaints.onrender.com/api/products")
       .then(res => setGroupedProducts(res.data))
       .catch(err => console.error("Error fetching gear:", err));
   }, []);
