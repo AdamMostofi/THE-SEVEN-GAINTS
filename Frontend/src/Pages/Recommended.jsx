@@ -5,9 +5,10 @@ export default function Recommended() {
   const [groupedProducts, setGroupedProducts] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/api/products")
+    // 🌍 LIVE Render backend URL
+    axios.get("https://the-seven-giants.onrender.com/api/products")
       .then(res => setGroupedProducts(res.data))
-      .catch(err => console.error(err));
+      .catch(err => console.error("Error fetching gear:", err));
   }, []);
 
   return (
