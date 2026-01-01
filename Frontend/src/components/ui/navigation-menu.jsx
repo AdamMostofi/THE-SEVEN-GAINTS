@@ -282,60 +282,103 @@ export default function MainNavigation() {
       </button>
 
       {/* Mobile Slide-Over Menu */}
-      {/* Mobile Slide-Over Menu */}
-{mobileOpen && (
-  <div className="absolute top-full left-0 w-full bg-white flex flex-col p-4 space-y-2 shadow-xl border-b border-stone-100 md:hidden z-[110]">
-    <NavigationMenuLink href="/" className="px-3 py-2 rounded-md hover:bg-stone-50 font-medium">
-      Home
-    </NavigationMenuLink>
-    
-    {/* Added missing links below */}
-    <NavigationMenuLink href="/mountains" className="px-3 py-2 rounded-md hover:bg-stone-50 font-medium">
-      Mountains
-    </NavigationMenuLink>
-    
-    <NavigationMenuLink href="/recommended" className="px-3 py-2 rounded-md hover:bg-stone-50 font-medium">
-      Recommended
-    </NavigationMenuLink>
-    
-    <NavigationMenuLink href="/contact" className="px-3 py-2 rounded-md hover:bg-stone-50 font-medium">
-      Contact
-    </NavigationMenuLink>
-    
-    <NavigationMenuLink href="/about" className="px-3 py-2 rounded-md hover:bg-stone-50 font-medium">
-      About
-    </NavigationMenuLink>
-
-    {user ? (
-      <>
-        {/* Added Admin Link for Mobile */}
-        {user.email === "adammostofi@gmail.com" && (
-          <NavigationMenuLink href="/admin" className="px-3 py-2 rounded-md bg-green-50 text-green-700 font-bold">
-            Admin Panel
+      {mobileOpen && (
+        <div className="absolute top-full left-0 w-full bg-white flex flex-col p-4 space-y-2 shadow-xl border-b border-stone-100 md:hidden z-[110] max-h-[80vh] overflow-y-auto">
+          <NavigationMenuLink
+            href="/"
+            className="px-3 py-2 rounded-md hover:bg-stone-50 font-medium"
+          >
+            Home
           </NavigationMenuLink>
-        )}
-        <button
-          onClick={handleLogout}
-          className="text-left px-3 py-2 rounded-md text-red-600 font-bold hover:bg-red-50"
-        >
-          Logout ({user.username})
-        </button>
-      </>
-    ) : (
-      <>
-        <NavigationMenuLink href="/login" className="px-3 py-2 rounded-md hover:bg-stone-50 font-medium">
-          Login
-        </NavigationMenuLink>
-        <NavigationMenuLink
-          href="/signup"
-          className="px-3 py-2 rounded-md bg-green-900 text-white mt-2 text-center font-bold"
-        >
-          Sign Up
-        </NavigationMenuLink>
-      </>
-    )}
-  </div>
-)}
+
+          {/* --- MOUNTAINS SUB-MENU START --- */}
+          <div className="px-3 py-2">
+            <p className="text-xs font-bold uppercase tracking-widest text-stone-400 mb-2">
+              The Seven Giants
+            </p>
+            <div className="grid grid-cols-1 gap-1 pl-2 border-l-2 border-green-100">
+              {[
+                { id: 1, name: "Mount Everest" },
+                { id: 2, name: "K2" },
+                { id: 3, name: "Kangchenjunga" },
+                { id: 4, name: "Lhotse" },
+                { id: 5, name: "Makalu" },
+                { id: 6, name: "Cho Oyu" },
+                { id: 7, name: "Dhaulagiri" },
+              ].map((mtn) => (
+                <NavigationMenuLink
+                  key={mtn.id}
+                  href={`/mountains/${mtn.id}`}
+                  className="block py-1 text-sm text-stone-600 hover:text-green-800 transition-colors"
+                >
+                  • {mtn.name}
+                </NavigationMenuLink>
+              ))}
+            </div>
+          </div>
+          {/* --- MOUNTAINS SUB-MENU END --- */}
+
+          <NavigationMenuLink
+            href="/recommended"
+            className="px-3 py-2 rounded-md hover:bg-stone-50 font-medium"
+          >
+            Recommended
+          </NavigationMenuLink>
+
+          <NavigationMenuLink
+            href="/contact"
+            className="px-3 py-2 rounded-md hover:bg-stone-50 font-medium"
+          >
+            Contact
+          </NavigationMenuLink>
+
+          <NavigationMenuLink
+            href="/about"
+            className="px-3 py-2 rounded-md hover:bg-stone-50 font-medium"
+          >
+            About
+          </NavigationMenuLink>
+
+          <div className="pt-2 border-t border-stone-100">
+            {user ? (
+              <>
+                {user.email === "adammostofi@gmail.com" && (
+                  <NavigationMenuLink
+                    href="/admin"
+                    className="block px-3 py-2 rounded-md bg-green-50 text-green-700 font-bold mb-2"
+                  >
+                    Admin Panel
+                  </NavigationMenuLink>
+                )}
+                <div className="px-3 py-1 text-xs text-stone-400 italic">
+                  Logged in as {user.username}
+                </div>
+                <button
+                  onClick={handleLogout}
+                  className="w-full text-left px-3 py-2 rounded-md text-red-600 font-bold hover:bg-red-50"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <div className="flex flex-col gap-2">
+                <NavigationMenuLink
+                  href="/login"
+                  className="px-3 py-2 rounded-md hover:bg-stone-50 font-medium"
+                >
+                  Login
+                </NavigationMenuLink>
+                <NavigationMenuLink
+                  href="/signup"
+                  className="px-3 py-2 rounded-md bg-green-900 text-white text-center font-bold"
+                >
+                  Sign Up
+                </NavigationMenuLink>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </NavigationMenu>
   );
 }
