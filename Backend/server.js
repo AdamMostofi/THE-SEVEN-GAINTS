@@ -7,7 +7,10 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 
-app.use(cors());
+app.use(cors({
+  origin: ["https://the-seven-gaints-1.onrender.com", "http://localhost:5173"],
+  credentials: true
+}));
 app.use(express.json());
 
 // --- DEBUGGING LOGS ---
@@ -85,26 +88,23 @@ app.get("/api/mountains/:id", async (req, res) => {
   }
 });
 
-//  GET all Products (For Recommended Page)
 app.get("/api/products", async (req, res) => {
   try {
     const query = `
-            SELECT 
-                p.id, 
-                p.name AS product_name, 
-                p.category, 
-                p.price, 
-                p.link, 
-                p.image_url AS product_image_url,
-                m.name AS mountain_name,
-                m.id AS mountain_id
-            FROM products p
-            JOIN mountains m ON p.mountain_id = m.id
-            ORDER BY m.height DESC, p.category
-        `;
+      SELECT p.id, p.name AS product_name, p.category, p.price, p.link, p.image_url AS product_image_url,
+             m.name AS mountain_name, m.id AS mountain_id
+      FROM products p
+      JOIN mountains m ON p.mountain_id = m.id
+      ORDER BY m.height DESC, p.category`;
+    
     const [rows] = await pool.query(query);
 
-    // Grouping products by mountain
+    // If rows is empty, the database might be empty or the JOIN failed
+    if (rows.length === 0) {
+      console.log("⚠️ No products found in database.");
+      return res.status(200).json([]); 
+    }
+
     const productsByMountain = rows.reduce((acc, product) => {
       const { mountain_name, mountain_id, ...productDetails } = product;
       if (!acc[mountain_id]) {
@@ -116,8 +116,8 @@ app.get("/api/products", async (req, res) => {
 
     res.status(200).json(Object.values(productsByMountain));
   } catch (error) {
-    console.error("Error fetching products:", error);
-    res.status(500).json({ message: "Failed to retrieve product list." });
+    console.error("❌ Recommended Page Error:", error);
+    res.status(500).json({ message: "Error fetching products." });
   }
 });
 //  SIGNUP: Create a new user (CRUD: Create)
